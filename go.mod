@@ -1,3 +1,3 @@
-module tuminzee/hello-api.git
+module github.com/tuminzee/hello-api.git
 
 go 1.22.4

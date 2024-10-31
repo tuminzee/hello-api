@@ -12,5 +12,26 @@ tasks:
   start:
     cmd: go run cmd/main.go
 
+  start:dev:
+    cmd: go run cmd/main.go
+    watch: true
+    
+
   tidy:
     cmd: go mod tidy
+  fmt:
+    cmd: go fmt ./...
+
+  test:
+    cmd: go test ./...
+
+  build:
+    cmd: go build -o bin/main cmd/main.go
+
+  curl:
+    cmd: curl http://localhost:8080/hello
+
+  start:prod:
+    cmds:
+      - task build
+      - ./bin/main
