@@ -1,5 +1,5 @@
 package translation
 
-func Translate(word string, language string) string {
-	return ""
+func Translate(word string, _language string) string {
+	return word
 }

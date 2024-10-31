@@ -23,7 +23,7 @@ tasks:
     cmd: go fmt ./...
 
   test:
-    cmd: go test ./...
+    cmd: go test ./... --v
 
   build:
     cmd: go build -o bin/main cmd/main.go
