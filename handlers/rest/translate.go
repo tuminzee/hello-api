@@ -20,12 +20,21 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	enc := json.NewEncoder(w)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	language := defaultLanguage
+	language := r.URL.Query().Get("language")
+	slog.Info("Language from query", "language", language)
+	if language == "" {
+		language = defaultLanguage
+	}
 
-	word := strings.TrimPrefix(r.URL.Path, "/")
+	word := strings.ReplaceAll(r.URL.Path, "/", "")
 	slog.Info("got the word", "word", word)
 
 	translation := translation.Translate(word, language)
+
+	if translation == "" {
+		http.Error(w, "translation not found", http.StatusNotFound)
+		return
+	}
 
 	resp := Resp{
 		Language:    language,

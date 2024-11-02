@@ -32,6 +32,17 @@ tasks:
   test:
     cmd: go test ./... --v
 
+  cover:
+    cmd: go test ./... -coverprofile=coverage.out
+  
+  report:
+    cmd: go tool cover -html=coverage.out -o coverage.html
+
+  coverage:
+    # This command analyzes test coverage and checks if it meets 80% threshold
+    # Using explicit path to awk to avoid path issues
+    cmd: go tool cover -func coverage.out | grep "total:" | /usr/bin/awk '{print ((int($3) > 80) != 1) }'
+
   build:
     cmd: go build -o bin/main cmd/main.go
 
