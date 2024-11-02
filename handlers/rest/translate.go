@@ -2,7 +2,7 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
+	"log/slog"
 	"net/http"
 	"strings"
 
@@ -23,7 +23,7 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	language := defaultLanguage
 
 	word := strings.TrimPrefix(r.URL.Path, "/")
-	fmt.Printf("got the word %v\n", word)
+	slog.Info("got the word", "word", word)
 
 	translation := translation.Translate(word, language)
 
