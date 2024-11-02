@@ -36,6 +36,7 @@ tasks:
     cmd: go test ./... -coverprofile=coverage.out
   
   report:
+    deps: [cover]
     cmd: go tool cover -html=coverage.out -o coverage.html
 
   coverage:

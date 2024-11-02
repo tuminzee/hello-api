@@ -25,7 +25,7 @@ test:
 cover:
 	go test ./... -coverprofile=coverage.out
 
-report:
+report: cover
 	go tool cover -html=coverage.out -o coverage.html
 
 coverage:
