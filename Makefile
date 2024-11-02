@@ -32,6 +32,9 @@ coverage: cover
 	# Check if coverage meets 80% threshold
 	@go tool cover -func coverage.out | grep "total:" | /usr/bin/awk '{print ((int($$3) > 80) != 1) }'
 
+report-cleanup:
+	rm -rf coverage.out coverage.html
+
 build:
 	go build -o bin/main cmd/main.go
 
@@ -40,3 +43,4 @@ curl:
 
 start-prod: build
 	./bin/main
+
