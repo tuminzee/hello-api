@@ -1,6 +1,6 @@
 GO_VERSION := go1.22
 
-.PHONY: setup start start-dev tidy fmt tag test cover report coverage build curl start-prod
+.PHONY: setup start tidy fmt tag test cover report coverage build curl start-prod
 
 setup:
 	@echo $(GO_VERSION)
@@ -28,7 +28,7 @@ cover:
 report: cover
 	go tool cover -html=coverage.out -o coverage.html
 
-coverage:
+coverage: cover
 	# Check if coverage meets 80% threshold
 	@go tool cover -func coverage.out | grep "total:" | /usr/bin/awk '{print ((int($$3) > 80) != 1) }'
 
