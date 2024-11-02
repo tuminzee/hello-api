@@ -15,7 +15,7 @@ jobs:
     
     steps:
     - name: Set up Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v5
       with:
         go-version: '1.22'
         check-latest: true
@@ -61,7 +61,7 @@ jobs:
     
     steps:
     - name: Set up Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v5
       with:
         go-version: '1.22'
         check-latest: true
@@ -75,19 +75,14 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
 
-    - name: Build Application
-      run: task build
-
-    - name: Prepare Build Directory
-      run: |
-        mkdir -p build
-        cp ./bin/main build/.
+    - name: Build Package
+      run: task package
     
     - name: Archive Build
       uses: actions/upload-artifact@v4
       with:
         name: build-artifact
-        path: build
+        path: dist
 
         
 

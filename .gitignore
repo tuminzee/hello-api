@@ -18,3 +18,6 @@ api
 
 bin
 coverage.html
+
+# Dist directory for build artifacts
+dist
