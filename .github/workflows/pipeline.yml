@@ -45,7 +45,7 @@ jobs:
     - name: Prepare Reports Directory
       run: |
         mkdir -p reports
-        cp covrage.html reports/
+        cp coverage.html reports/
         
     - name: Archive Test Results
       uses: actions/upload-artifact@v4
