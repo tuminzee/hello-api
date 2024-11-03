@@ -65,9 +65,22 @@ tasks:
       - cd dist && tar czf {{.BINARY_NAME}}-linux-amd64.tar.gz {{.BINARY_NAME}}-linux-amd64
       - cd dist && tar czf {{.BINARY_NAME}}-darwin-amd64.tar.gz {{.BINARY_NAME}}-darwin-amd64
       - cd dist && zip {{.BINARY_NAME}}-windows-amd64.zip {{.BINARY_NAME}}-windows-amd64.exe
+      - GOOS=js GOARCH=wasm go build -o dist/{{.BINARY_NAME}}.wasm {{.MAIN_FILE}}
+      - cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" dist/
 
   curl:
     cmd: curl http://localhost:8080/hello
+
+  build-wasm:
+    cmds:
+      - GOOS=js GOARCH=wasm go build -o wasm/{{.BINARY_NAME}}.wasm {{.MAIN_FILE}} 
+      - cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" wasm/
+
+  start:wasm:
+    desc: Serve WASM files locally for testing
+    deps: [build-wasm]
+    cmds:
+      - go run -v server/wasm-server.go
 
   start:prod:
     cmds:
@@ -76,3 +89,8 @@ tasks:
 
   report-cleanup:
     cmd: rm -rf coverage.html coverage.out
+
+  vet:
+    cmd: go vet ./...
+
+
