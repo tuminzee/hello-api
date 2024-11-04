@@ -18,9 +18,8 @@ tasks:
   start:
     cmd: go run cmd/main.go
 
-  start_dev:
-    cmd: go run cmd/main.go
-    watch: true
+  dev:
+    cmd: air
 
   tidy:
     cmd: go mod tidy
@@ -33,10 +32,12 @@ tasks:
       - git push origin --tag
 
   test:
-    cmd: go test ./... --v
+    cmd: go test -tags="exclude" -v ./...
+
 
   cover:
-    cmd: go test ./... -coverprofile=coverage.out
+    cmd: go test -tags="exclude" -coverprofile=coverage.out ./...
+
   
   report:
     deps: [cover]

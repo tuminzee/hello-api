@@ -1,0 +1,68 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{.Title}}</title>
+    <meta name="htmx-config" content='{"selfRequestsOnly":false}'>
+  </head>
+  <body>
+    <div>
+      <h3>Translation of "Hello" in different languages</h3>
+
+      <div id="translations">
+        <div id="language-buttons">
+        </div>
+
+        <div style="height: 10px;"></div>
+        <div id="hello-result" style="display: none;"></div>
+        <div id="indicator" style="display: none;">loading...</div>
+
+        <script>
+          async function getLanguages() {
+            const response = await fetch('/languages');
+            const allLanguages = await response.json();
+            return allLanguages.languages;
+          }
+
+          async function createLanguageButtons() {
+            const languages = await getLanguages();
+            const buttonContainer = document.getElementById('language-buttons');
+            
+            for (const language of languages) {
+              const button = document.createElement('button');
+              button.onclick = () => getTranslation(language);
+              button.textContent = language.charAt(0).toUpperCase() + language.slice(1);
+              buttonContainer.appendChild(button);
+            }
+          }
+
+          createLanguageButtons();
+
+          async function getTranslation(language) {
+            const indicator = document.getElementById('indicator');
+            const resultDiv = document.getElementById('hello-result');
+            
+            try {
+              indicator.style.display = 'block';
+              resultDiv.style.display = 'none';
+              
+              const url = language ? `/hello?language=${language}` : '/hello';
+              
+              const response = await fetch(url);
+              const data = await response.json();
+              
+              resultDiv.style.display = 'block';
+              resultDiv.textContent = data.translation;
+            } catch (error) {
+              console.error('Error:', error);
+              resultDiv.style.display = 'block';
+              resultDiv.textContent = 'Error loading translation';
+            } finally {
+              indicator.style.display = 'none';
+            }
+          }
+        </script>
+      </div>
+    </div>
+  </body>
+</html>

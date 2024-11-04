@@ -22,3 +22,4 @@ coverage.html
 # Dist directory for build artifacts
 dist
 wasm
+tmp

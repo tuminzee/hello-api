@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/tuminzee/hello-api/translation"
 )
@@ -40,6 +41,8 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 		Language:    language,
 		Translation: translation,
 	}
+
+	time.Sleep(1 * time.Second)
 
 	if err := enc.Encode(resp); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

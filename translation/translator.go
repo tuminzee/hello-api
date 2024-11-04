@@ -29,3 +29,7 @@ func Translate(word string, language string) string {
 func sanitize(word string) string {
 	return strings.TrimSpace(strings.ToLower(word))
 }
+
+func GetSupportedLanguages() []string {
+	return []string{"english", "french", "spanish", "german"}
+}
